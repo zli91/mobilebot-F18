@@ -70,7 +70,8 @@ class WaypointFollower():
 
     def moveDistance(self, Distance_goal, linearVelocity):
         self.lc.handle()
-        rho = Distance_goal
+        rho = math.fabs(Distance_goal)
+        linearVelocity /= (Distance_goal/rho)
         theta_goal = self.odo_theta
 
         x_goal = self.odo_x + Distance_goal*math.cos(theta_goal)
@@ -85,6 +86,12 @@ class WaypointFollower():
             rho = math.sqrt(x_diff**2 + y_diff**2)
             inFront = x_diff*math.cos(self.odo_theta) + y_diff*math.sin(self.odo_theta)
             theta_diff = theta_goal - self.odo_theta
+            
+            if theta_diff >= pi:
+                theta_diff = theta_diff%(pi) - pi
+            elif theta_diff < -pi:
+                theta_diff = theta_diff%(pi)    
+                    
 
             Kp = 0.950
 
@@ -106,7 +113,7 @@ class WaypointFollower():
         elif theta_goal <= -pi:
             theta_goal = theta_goal%(2*pi)
 
-        # self.motor_cmd_publish(0, math.copysign(1, alpha)*angularVelocity)
+        # self.motor_cmd_publish(0.0, math.copysign(1, alpha)*angularVelocity)
 
         while math.fabs(alpha) > 0.1:
             self.lc.handle()
