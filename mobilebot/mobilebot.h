@@ -36,7 +36,6 @@
 #include "../lcmtypes/oled_message_t.h"
 #include "../lcmtypes/timestamp_t.h"
 #include "../lcmtypes/reset_odometry_t.h"
-
 #include "../common/mb_defs.h"
 #include "../common/mb_structs.h"
 #include "../common/mb_controller.h"
