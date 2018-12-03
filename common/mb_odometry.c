@@ -44,7 +44,6 @@ void mb_update_odometry(mb_odometry_t* mb_odometry, mb_state_t* mb_state){
     
     float dtheta_imu = mb_angle_diff_radians(mb_state->last_yaw,mb_state->tb_angles[2]);
     float dtheta_GO = dtheta_imu - dtheta_odo;
-    while(dtheta_GO < -M_PI);
     float dtheta = 0.0;
     //printf("GO: %f\t", dtheta_GO);
     if(fabs(dtheta_GO) > DTHETA_THRESH){
