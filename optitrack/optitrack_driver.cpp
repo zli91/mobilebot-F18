@@ -35,11 +35,11 @@ int main(int argc, char** argv)
     
     getopt_t* gopt = getopt_create();
     getopt_add_bool(gopt,   'h', "help", 0, "Display this help message.\n");
-    getopt_add_string(gopt, 'i', kInterfaceArg, "127.0.0.1", "Local network interface used when connecting to the Optitrack network.");
+    getopt_add_string(gopt, 'i', kInterfaceArg, "192.168.1.200", "Local network interface used when connecting to the Optitrack network.");
     getopt_add_int(gopt,    'b', kSerialBaudArg, "57600", "Serial baudrate for communication via XBee");
-    getopt_add_string(gopt, 'd', kSerialPort, "/dev/ttyUSB1", "Serial port used to send the XBee packets out"); 
+    getopt_add_string(gopt, 'd', kSerialPort, "/dev/ttyUSB0", "Serial port used to send the XBee packets out"); 
     getopt_add_int(gopt,    'x', kXbeeAddrArg, "1", "Address of target XBee");
-    getopt_add_int(gopt,    'r', kBBRigidBodyArg, "5", "Id of Balancebot rigid body to publish pose for.");
+    getopt_add_int(gopt,    'r', kBBRigidBodyArg, "1", "Id of Balancebot rigid body to publish pose for.");
     getopt_add_int(gopt,   'T', kTestingFakeData, "0", "Send fake, hardcoded data instead of optitrack for testing");  
     
     if (!getopt_parse(gopt, argc, argv, 1) || getopt_get_bool(gopt, "help")) {
