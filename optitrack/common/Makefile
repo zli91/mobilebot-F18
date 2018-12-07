@@ -13,7 +13,8 @@ LIBCOMMON_OBJS = \
 	getopt.o \
 	timestamp.o \
 	zarray.o \
-	zhash.o
+	zhash.o \
+	serial.o
 
 all: $(LIB_COMMON)
 
@@ -27,3 +28,4 @@ $(LIB_COMMON): $(LIBCOMMON_OBJS) $(LIBDEPS)
 clean:
 	@rm -f *.o *~ *.a
 	@rm -f $(LIB_COMMON)
+	@echo "clean [optitrack/common]"

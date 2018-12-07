@@ -41,7 +41,8 @@ void mb_update_odometry(mb_odometry_t* mb_odometry, mb_state_t* mb_state){
     
     //perform gyrodometry
     float dtheta_odo = enc2meters*(mb_state->right_encoder - mb_state->left_encoder) / WHEEL_BASE;
-    float dtheta_imu = mb_state->tb_angles[2] - mb_state->last_yaw;
+    
+    float dtheta_imu = mb_angle_diff_radians(mb_state->last_yaw,mb_state->tb_angles[2]);
     float dtheta_GO = dtheta_imu - dtheta_odo;
     float dtheta = 0.0;
     //printf("GO: %f\t", dtheta_GO);
@@ -84,4 +85,11 @@ float mb_clamp_radians(float angle){
     }
 
     return angle;
+}
+
+float mb_angle_diff_radians(float angle1, float angle2){
+    float diff = angle2 - angle1;
+    while(diff < -PI) diff+=2.0*PI;
+    while(diff > PI) diff-=2.0*PI;
+    return diff;
 }

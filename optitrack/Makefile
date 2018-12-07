@@ -37,3 +37,4 @@ $(BIN_OPTITRACK_DRIVER): optitrack.o optitrack_driver.o
 # Clean target
 clean:
 	@rm -f *~ *.o $(BIN_OPTITRACK_DRIVER) *.a
+	@echo "clean [optitrack]"
