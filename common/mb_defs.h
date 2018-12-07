@@ -43,14 +43,14 @@
 #define DT                      0.01  // 1/sample_rate
 #define PRINTF_HZ               10    // rate of print loop
 #define RC_CTL_HZ               25    // rate of RC data update
-#define LCM_HZ                  30    // rate of LCM publish
-#define LCM_PRIORITY            20    // priority of LCM thread (lower is less critical)
+#define LCM_HZ                  100    // rate of LCM subscribe
+#define LCM_PRIORITY            60    // priority of LCM thread (lower is less critical)
 #define SETPOINT_PRIORITY       30    // priority of setpoint thread (lower is less critical)
 #define CONTROLLER_PRIORITY     90    // priority of controller (lower is less critical)
 #define LED_OFF                 1
 #define LED_ON                  0
 // LCM Channel Names
-#define OPTITRACK_CHANNEL           "OPTITRACK_CHANNEL"
+#define OPTITRACK_CHANNEL           "TRUE_POSE"
 #define ODOMETRY_CHANNEL            "ODOMETRY"
 #define RESET_ODOMETRY_CHANNEL      "RESET_ODOMETRY"
 #define CONTROLLER_PATH_CHANNEL     "CONTROLLER_PATH"
