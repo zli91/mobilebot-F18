@@ -10,8 +10,13 @@
 * int main() 
 *
 *******************************************************************************/
+
+FILE * fl;
+
 int main(){
 
+
+	fl = fopen("optPoses.csv", "w");
     rc_led_set(RC_LED_GREEN, LED_OFF);
     rc_led_set(RC_LED_RED, LED_ON);
 	//set cpu freq to max performance
@@ -110,7 +115,7 @@ int main(){
     mb_motor_cleanup();
     rc_encoder_cleanup();
     rc_remove_pid_file();
-	 
+	 fclose(fl);
 	return 0;
 }
 
@@ -225,6 +230,7 @@ void optitrack_message_handler(const lcm_recv_buf_t* rbuf,
     mb_state.opti_x = pose->x;
     mb_state.opti_y = pose->y;
     mb_state.opti_theta = pose->theta;
+    fprintf(fl, "%lld, %f, %f, %f, %f, %f, %f \n", pose->utime, mb_state.opti_x, mb_state.opti_y, mb_state.opti_theta, mb_odometry.x, mb_odometry.y, mb_odometry.theta);
     pthread_mutex_unlock(&state_mutex);
 }
 

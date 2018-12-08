@@ -70,8 +70,7 @@ class WaypointFollower():
 
     def moveDistance(self, Distance_goal, linearVelocity):
         self.lc.handle()
-        rho = math.fabs(Distance_goal)
-        linearVelocity *= (Distance_goal/rho)
+        rho = Distance_goal
         theta_goal = self.odo_theta
 
         x_goal = self.odo_x + Distance_goal*math.cos(theta_goal)
@@ -86,12 +85,6 @@ class WaypointFollower():
             rho = math.sqrt(x_diff**2 + y_diff**2)
             inFront = x_diff*math.cos(self.odo_theta) + y_diff*math.sin(self.odo_theta)
             theta_diff = theta_goal - self.odo_theta
-            
-            if theta_diff >= pi:
-                theta_diff = theta_diff%(pi) - pi
-            elif theta_diff < -pi:
-                theta_diff = theta_diff%(pi)    
-                    
 
             Kp = 0.950
 
@@ -113,9 +106,9 @@ class WaypointFollower():
         elif theta_goal <= -pi:
             theta_goal = theta_goal%(2*pi)
 
-        # self.motor_cmd_publish(0.0, math.copysign(1, alpha)*angularVelocity)
+        # self.motor_cmd_publish(0, math.copysign(1, alpha)*angularVelocity)
 
-        while math.fabs(alpha) > 0.05:
+        while math.fabs(alpha) > 0.1:
             self.lc.handle()
             alpha_old = alpha
             alpha = theta_goal - self.odo_theta
@@ -137,34 +130,6 @@ class WaypointFollower():
 
         print("I am about to stop the motors\n\n\n")
         self.motor_cmd_publish(0.0, 0.0)
-
-    def turnAngle2(self, AngularDistance_goal, angularVelocity):
-        self.lc.handle()
-
-        theta = self.odo_theta
-        totalAngularDistance = 0.0
-
-
-        if AngularDistance_goal < 0.0:
-            angularVelocity = -angularVelocity
-
-
-        while math.fabs(totalAngularDistance) < math.fabs(AngularDistance_goal):
-            self.lc.handle()
-            totalAngularDistance = self.odo_theta - theta
-            # self.motor_cmd_publish(0.0, angularVelocity)
-
-            # print(math.fabs(totalAngularDistance) , "     ", math.fabs(AngularDistance_goal))
-            if math.fabs(totalAngularDistance) > math.fabs(AngularDistance_goal)/2:
-                self.motor_cmd_publish(0.0, .5*(AngularDistance_goal - totalAngularDistance))
-            else:
-                # print angularVelocity
-                self.motor_cmd_publish(0.0, angularVelocity)
-        
-        print("I am about to stop the motors\n\n\n")
-        # self.motor_cmd_publish(0.00001, 0.01)
-
-
 
 
 # def squareTask(WPFollower, squareSide, linearVelocity, angularVelocity):
@@ -209,7 +174,7 @@ def squareTask(WPFollower, squareSide, linearVelocity, angularVelocity, directio
     WPFollower.moveDistance(squareSide, linearVelocity)
     print "starting fouth turnAngle"
     WPFollower.turnAngle(direction*pi/2, angularVelocity)
-    WPFollower.turnAngle2(0.01, 0.000001)
+
     return
 
 
